@@ -3,239 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indian Neon Beats Player</title>
+    <title>Dashboard Hub</title>
     <style>
-        :root {
-            --neon-cyan: #00f3ff;
-            --neon-magenta: #ff007b;
-            --neon-green: #00ff66;
-            --neon-purple: #9d00ff;
-            --bg-dark: #0a0a16;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 20px;
-            background-color: var(--bg-dark);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
+            background-color: #0d0e15;
+            color: #ffffff;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            justify-content: center;
+            padding: 2rem;
         }
 
-        h1 {
-            text-shadow: 0 0 10px var(--neon-cyan);
-            margin-bottom: 30px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-align: center;
-        }
-
-        /* 4 Neon Button Container */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 40px;
-        }
-
-        .neon-btn {
-            background: transparent;
-            border: 2px solid;
-            padding: 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        /* Moving Multicolor Neon Gradient Title */
+        .neon-title {
+            font-size: 3rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(45deg, #ff0055, #00ffcc, #9900ff, #ffcc00, #ff0055);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonGradient 8s ease infinite;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.3));
         }
 
-        /* Distinct Color Properties */
-        .btn-cyan { border-color: var(--neon-cyan); color: var(--neon-cyan); box-shadow: 0 0 10px rgba(0,243,255,0.2); }
-        .btn-cyan:hover, .btn-cyan.active { background: var(--neon-cyan); color: #000; box-shadow: 0 0 25px var(--neon-cyan); }
+        @keyframes neonGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-        .btn-magenta { border-color: var(--neon-magenta); color: var(--neon-magenta); box-shadow: 0 0 10px rgba(255,0,123,0.2); }
-        .btn-magenta:hover, .btn-magenta.active { background: var(--neon-magenta); color: #000; box-shadow: 0 0 25px var(--neon-magenta); }
-
-        .btn-green { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 10px rgba(0,255,102,0.2); }
-        .btn-green:hover, .btn-green.active { background: var(--neon-green); color: #000; box-shadow: 0 0 25px var(--neon-green); }
-
-        .btn-purple { border-color: var(--neon-purple); color: var(--neon-purple); box-shadow: 0 0 10px rgba(157,0,255,0.2); }
-        .btn-purple:hover, .btn-purple.active { background: var(--neon-purple); color: #000; box-shadow: 0 0 25px var(--neon-purple); }
-
-        /* Audio & Content Display Panels */
-        .player-container, .content-display {
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
+        }
+
+        /* Center-aligned vertical buttons */
+        .tab-btn {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-            margin-bottom: 20px;
-        }
-
-        .track-title {
+            color: #a0a5c0;
+            padding: 1.2rem;
             font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: var(--neon-cyan);
-            text-align: center;
-        }
-
-        audio {
-            width: 100%;
-            outline: none;
-        }
-
-        .song-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            border-radius: 12px;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .song-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .status-msg {
-            color: #aaa;
+            transition: all 0.2s ease;
             text-align: center;
-            font-style: italic;
+            width: 100%;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #00ffcc;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
-    <h1>NEON BEATS PLAYER</h1>
+    <h1 class="neon-title">Hyperion</h1>
 
-    <!-- 4 Neon Glowing Buttons -->
-    <div class="grid-container">
-        <!-- Pass the actual Blog URL and standard post identifier tags to sort tracks easily -->
-        <button class="neon-btn btn-cyan" onclick="fetchBlogSongs('https://wikipec.blogspot.com/2026/09/upd.html', 'upd', this)">Bollywood Mix</button>
-        <button class="neon-btn btn-magenta" onclick="fetchBlogSongs('https://blogspot.com', 'punjabi', this)">Punjabi Hits</button>
-        <button class="neon-btn btn-green" onclick="fetchBlogSongs('https://blogspot.com', 'south', this)">South Special</button>
-        <button class="neon-btn btn-purple" onclick="fetchBlogSongs('https://blogspot.com', 'indie', this)">Indie Pop</button>
-    </div>
-
-    <!-- Persistent Loop Audio Player -->
-    <div class="player-container">
-        <div class="track-title" id="current-track-title">No Track Selected</div>
-        <audio id="audio-player" controls></audio>
-    </div>
-
-    <!-- Fetched Dynamic Content Display -->
-    <div class="content-display">
-        <h3>Song Playlist</h3>
-        <div id="songs-list-target">
-            <p class="status-msg">Click a category above to pull live tracks.</p>
-        </div>
-    </div>
+    <nav class="nav-group">
+        <!-- Add your target URLs inside data-url -->
+        <button class="tab-btn" data-url="https://wikipedia.org">Launch Portal One</button>
+        <button class="tab-btn" data-url="https://example.com">Launch Portal Two</button>
+        <button class="tab-btn" data-url="https://example.org">Launch Portal Three</button>
+        <button class="tab-btn" data-url="https://example.net">Launch Portal Four</button>
+    </nav>
 
     <script>
-        const audioPlayer = document.getElementById('audio-player');
-        const currentTrackTitle = document.getElementById('current-track-title');
-        const songsListTarget = document.getElementById('songs-list-target');
-        
-        let playlist = [];
-        let currentTrackIndex = 0;
-
-        // Bypasses CORS by using Blogger's public JSON feed API 
-        async function fetchBlogSongs(blogUrl, searchKeyword, element) {
-            // Update Active UI Button States
-            document.querySelectorAll('.neon-btn').forEach(btn => btn.classList.remove('active'));
-            if(element) element.classList.add('active');
-
-            songsListTarget.innerHTML = `<p class="status-msg">Connecting to live feed...</p>`;
-            
-            // Blogger JSON Feed API URL Construction
-            const feedUrl = `${blogUrl}/feeds/posts/default?q=${searchKeyword}&alt=json-in-script&callback=parseBloggerJson`;
-
-            // Use JSONP script injection mechanism to entirely circumvent browser CORS block
-            const oldScript = document.getElementById('blogger-jsonp');
-            if(oldScript) oldScript.remove();
-
-            const script = document.createElement('script');
-            script.id = 'blogger-jsonp';
-            script.src = feedUrl;
-            document.body.appendChild(script);
-        }
-
-        // Global Callback Handler execution when feed arrives
-        window.parseBloggerJson = function(data) {
-            playlist = [];
-            songsListTarget.innerHTML = '';
-
-            if (!data.feed.entry || data.feed.entry.length === 0) {
-                songsListTarget.innerHTML = `<p class="status-msg">No posts found containing that specific list tag match.</p>`;
-                return;
-            }
-
-            // Target the latest relevant blog entry post content
-            const postContent = data.feed.entry[0].content.$t;
-            
-            // Generate standard memory elements to parse anchor tags inside post content body
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = postContent;
-            
-            const anchors = tempDiv.querySelectorAll('a');
-            
-            anchors.forEach((anchor, index) => {
-                const trackUrl = anchor.getAttribute('href');
-                // Ensure link points to audio format or general download path
-                if (trackUrl && (trackUrl.includes('.mp3') || trackUrl.includes('drive.google') || trackUrl.includes('download') || trackUrl.includes('audio'))) {
-                    const trackName = anchor.textContent.trim() || `Track #${index + 1}`;
-                    playlist.push({ name: trackName, url: trackUrl });
-                }
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetUrl = this.getAttribute('data-url');
+                
+                // Save URL locally so the next page can read it
+                localStorage.setItem('selectedLink', targetUrl);
+                
+                // Open the 2nd page in the same app
+                window.location.href = 'content.html';
             });
-
-            if (playlist.length === 0) {
-                songsListTarget.innerHTML = `<p class="status-msg">Post found, but no MP3 links were detected inside it.</p>`;
-                return;
-            }
-
-            // Render playable track layouts inside UI
-            playlist.forEach((track, index) => {
-                const songItem = document.createElement('div');
-                songItem.className = 'song-item';
-                songItem.innerHTML = `<span>🎵 ${track.name}</span><small style="color:var(--neon-cyan)">Play Now</small>`;
-                songItem.onclick = () => playTrack(index);
-                songsListTarget.appendChild(songItem);
-            });
-        };
-
-        function playTrack(index) {
-            if (playlist.length === 0) return;
-            currentTrackIndex = index;
-            const currentTrack = playlist[currentTrackIndex];
-            
-            currentTrackTitle.textContent = currentTrack.name;
-            audioPlayer.src = currentTrack.url;
-            audioPlayer.load();
-            
-            audioPlayer.play().catch(error => {
-                console.log("Auto-play blocked pending initial viewport interaction gesture: ", error);
-            });
-        }
-
-        // Automatic Track Advancing Loop Setup
-        audioPlayer.addEventListener('ended', () => {
-            currentTrackIndex++;
-            if (currentTrackIndex >= playlist.length) {
-                currentTrackIndex = 0; // Return directly back to playlist first track item
-            }
-            playTrack(currentTrackIndex);
         });
     </script>
+
 </body>
 </html>
